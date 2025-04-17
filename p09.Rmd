@@ -1,5 +1,34 @@
 ---
 title: "Portfolio 9"
 ---
+In this portfolio, I learned a new package {magick}, which can create and manipulate images. 
 
-> The projects should be numbered consecutively (i.e., in the order in which you began them), and should include for each project a description of the goal, the product (computer program, hand graph, computer graph, etc.), the data, and some interpretation. Reports must be reproducible and of high quality in terms of writing, grammar, presentation, etc.
+```{r}
+#install.packages("magick")
+library(magick)
+cat_img <- image_read("https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=500&h=500&q=80")
+```
+
+```{r}
+#manipulate the image 
+cat_blur <- image_blur(cat_img, radius = 2, sigma = 1)
+cat_edge <- image_edge(cat_img, radius = 1)
+cat_charcoal <- image_charcoal(cat_img, radius = 1)
+cat_flip <- image_flip(cat_img)
+cat_negate <- image_negate(cat_img)
+
+#combine 
+cat_collage <- image_append(c(cat_img, cat_blur, cat_edge, cat_charcoal, cat_flip, cat_negate))
+
+image_write(cat_collage, "cat_portfolio9.png")
+```
+
+```{r}
+cat_gif <- image_animate(
+  image_join(c(cat_img, cat_blur, cat_edge, cat_charcoal, cat_flip, cat_negate)),
+  fps = 1
+)
+image_write(cat_gif, "cat_portfolio9.gif")
+print(cat_gif)
+```
+
